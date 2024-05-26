@@ -1,12 +1,12 @@
 <?php
 require '../config/database.php';
-require '../src/helpers/Auth.php';
+require '../src/models/User.php';
 
 $url = isset($_GET['url']) ? $_GET['url'] : '';
 
 switch ($url) {
     case '':
-        include '../src/views/home.php';
+        include '../src/views/home.html';
         break;
     case 'admin/dashboard':
         Auth::check();

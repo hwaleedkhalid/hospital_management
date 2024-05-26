@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-image: url('../images/background-image.png');
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size: 100% 100%;
+    
+}
+
+.welcome-message {
+    font-size: 24px;
+    margin-top: -500px;
+    font-family:Georgia;
+    text-shadow: 2px 2px white;
+}
+
+.container {
+    text-align: center;
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px 10px rgba(10, 10, 10, 0.3);
+    max-width: 80%;
+    margin: auto;
+    position: absolute;
+    background-color:white;
+    color:black;
+}
+
+
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.role-selection {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.role-box {
+    text-align: center;
+    margin: 10px;
+}
+
+.role-selection img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border: 3px solid #ddd;
+}
+
+    .role-selection img:hover {
+        transform: scale(1.1);
+    }
+
+.role-name {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}

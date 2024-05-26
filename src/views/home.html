@@ -3,11 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../../public/css/home.css" >
 </head>
 <body>
-    <h1>Welcome to the Hospital Management System</h1>
-    <a href="?url=login">Login</a>
+
+    <div class="welcome-message"><h1>Welcome to General Hospital</h1></div>
+
+    <div class="container">
+
+        <h1 style="text-shadow: 1px 1px;">Login As</h1>
+        <div class="role-selection">
+            <div class="role-box">
+                <img src="../../public/images/admin-icon.png" alt="Admin" onclick="login('admin')">
+                <div class="role-name">Admin</div>
+            </div>
+            <div class="role-box">
+                <img src="../../public/images/doctor-icon.png" alt="Doctor" onclick="login('doctor')">
+                <div class="role-name">Doctor</div>
+            </div>
+            <div class="role-box">
+                <img src="../../public/images/patient-icon.png" alt="Patient" onclick="login('patient')">
+                <div class="role-name">Patient</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login(role) {
+            switch (role) {
+                case 'doctor':
+                    window.location.href = 'Login.html';
+                    break;
+                case 'patient':
+                    window.location.href = 'Login.html';
+                    break;
+                case 'admin':
+                    window.location.href = 'Login.html';
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
