@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/hospital_management/public/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sign In</h1>
+        <form method="POST" action="/hospital_management/public/index.php?url=login_action">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+        <p id="errorMessage" class="error-message">
+            <?php
+            if (isset($_GET['error'])) {
+                echo htmlspecialchars($_GET['error']);
+            }
+             ?>
+        </p>
+        <div class="signup">
+            <p><a href="#" class="contact-admin" onclick="showAdminContact(event)">Contact Admin?</a></p>
+        </div>
+    </div>
+
+    <div class="contact-admin-box" id="contactAdminBox" style="display: none;">
+        Admin: Waleed Khalid, Phone: 0309-5945489
+        <button class="close-btn" onclick="closeAdminContact()">Close</button>
+    </div>
+
+    <script>
+        function showAdminContact(event) {
+            event.preventDefault();
+            document.getElementById('contactAdminBox').style.display = 'block';
+        }
+
+        function closeAdminContact() {
+            document.getElementById('contactAdminBox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    background-image: url('login-image.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 50px;
+    border-radius: 50px;
+    box-shadow: 0px 100px 500px rgba(0, 0, 0, 0.5);
+    width: 400px;
+    text-align: center;
+    background-color: transparent;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group i {
+    position: absolute;
+    left: 10px;
+    top: 40px;
+    color: #aaa;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 17px 10px 10px 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.input-group a {
+    font-size: smaller;
+    color: #aaa;
+    text-decoration: none;
+}
+
+    .input-group a:hover {
+        color: #000;
+    }
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+}
+
+    button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+
+.signup {
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .signup a {
+        color: blue;
+        text-decoration: none;
+        position: relative;
+    }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
+
+.contact-admin-box {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    color: blue;
+    width: 300px;
+    text-align: center;
+    z-index: 1000;
+}
+
+    .contact-admin-box .close-btn {
+        cursor: pointer;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin-top: 10px;
+    }
+
+.error-message {
+    color: red;
+    font-size: smaller;
+    margin-top: 10px;
+    text-align: center;
+}

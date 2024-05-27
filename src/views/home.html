@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="../../public/css/home.css" >
+    <link rel="stylesheet" href="/hospital_management/public/css/home.css">
+   
 </head>
 <body>
 
     <div class="welcome-message"><h1>Welcome to General Hospital</h1></div>
 
     <div class="container">
-
         <h1 style="text-shadow: 1px 1px;">Login As</h1>
         <div class="role-selection">
             <div class="role-box">
-                <img src="../../public/images/admin-icon.png" alt="Admin" onclick="login('admin')">
+                <img src="/hospital_management/public/images/admin-icon.png" alt="Admin" onclick="login('admin')">
                 <div class="role-name">Admin</div>
             </div>
             <div class="role-box">
-                <img src="../../public/images/doctor-icon.png" alt="Doctor" onclick="login('doctor')">
+                <img src="/hospital_management/public/images/doctor-icon.png" alt="Doctor" onclick="login('doctor')">
                 <div class="role-name">Doctor</div>
             </div>
             <div class="role-box">
-                <img src="../../public/images/patient-icon.png" alt="Patient" onclick="login('patient')">
+                <img src="/hospital_management/public/images/patient-icon.jpeg" alt="Patient" onclick="login('patient')">
                 <div class="role-name">Patient</div>
             </div>
         </div>
@@ -33,13 +33,13 @@
         function login(role) {
             switch (role) {
                 case 'doctor':
-                    window.location.href = 'Login.html';
+                    window.location.href = '/hospital_management/public/index.php?url=login';
                     break;
                 case 'patient':
-                    window.location.href = 'Login.html';
+                    window.location.href = '/hospital_management/public/index.php?url=login';
                     break;
                 case 'admin':
-                    window.location.href = 'Login.html';
+                    window.location.href = '/hospital_management/public/index.php?url=login';
                     break;
                 default:
                     break;
