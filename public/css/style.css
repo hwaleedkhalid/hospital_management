@@ -6,7 +6,7 @@ body {
     align-items: center;
     min-height: 100vh;
     background-color: #f0f0f0;
-    background-image: url('login-image.jpg');
+    background-image: url('/hospital_management/public/images/login-image.png');
     background-size: cover;
     background-position: center;
 }
@@ -44,7 +44,15 @@ label {
     color: #aaa;
 }
 
-input[type="email"],
+input[type="text"]
+{
+    width: 100%;
+    padding: 17px 10px 10px 30px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
 input[type="password"] {
     width: 100%;
     padding: 17px 10px 10px 30px;
