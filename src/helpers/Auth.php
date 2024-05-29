@@ -7,8 +7,14 @@ include_once ROOT_PATH . '/config/database.php';
 include_once ROOT_PATH . '/src/models/User.php';
 
 class Auth {
+    public static function startSession() {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
     public static function check() {
-        session_start();
+        self::startSession();
         if (!isset($_SESSION['user_id'])) {
             header('Location: /hospital_management/public/index.php?url=login');
             exit();
@@ -16,7 +22,7 @@ class Auth {
     }
 
     public static function login($username, $password) {
-        session_start();
+        self::startSession();
         
         $database = new Database();
         $db = $database->getConnection();
@@ -59,7 +65,7 @@ class Auth {
     }
     
     public static function logout() {
-        session_start();
+        self::startSession();
         session_destroy();
         header('Location: /hospital_management/public/index.php?url=login');
         exit();
