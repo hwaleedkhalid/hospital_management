@@ -78,6 +78,41 @@ class Appointment {
     }
 
 
+
+
+    // Update appointment details
+public function updateAppointment($id, $patient_id, $doctor_id, $date, $time, $status) {
+    $query = "UPDATE " . $this->table_name . " 
+              SET patient_id = :patient_id, doctor_id = :doctor_id, date = :date, time = :time, status = :status
+              WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    // Sanitize input
+    $id = htmlspecialchars(strip_tags($id));
+    $patient_id = htmlspecialchars(strip_tags($patient_id));
+    $doctor_id = htmlspecialchars(strip_tags($doctor_id));
+    $date = htmlspecialchars(strip_tags($date));
+    $time = htmlspecialchars(strip_tags($time));
+    $status = htmlspecialchars(strip_tags($status));
+
+    // Bind parameters
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':patient_id', $patient_id);
+    $stmt->bindParam(':doctor_id', $doctor_id);
+    $stmt->bindParam(':date', $date);
+    $stmt->bindParam(':time', $time);
+    $stmt->bindParam(':status', $status);
+
+    // Execute query
+    if ($stmt->execute()) {
+        return true;
+    }
+    return false;
+}
+
+
+
     // get all appointments
     public function getAllAppointments() {
         $query = "SELECT * FROM " . $this->table_name;
