@@ -5,77 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add User</title>
     <link rel="stylesheet" href="/public/css/dashboard.css">
-<style>
-    /* CSS for Add New User form */
+    <style>
+        /* CSS for Add New User form */
 
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #e0f7fa;
-        color: #333;
-        margin: 0;
-        padding: 0;
-    }
-
-
-    .section {
-        max-width: 600px;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e0f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
 
-    h1 {
-        text-align: center;
-        padding: 20px;
-        color: #fff;
-        background-color: #0288d1;
-        margin: 0;
-    }
+        .section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-    h2 {
-        color: #00796b;
-        border-bottom: 2px solid #0288d1;
-        padding-bottom: 10px;
-    }
 
-    form {
-        margin-top: 20px;
-    }
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+            background-color: #0288d1;
+            margin: 0;
+        }
 
-    label {
-        display: block;
-        margin-bottom: 8px;
-    }
+        h2 {
+            color: #00796b;
+            border-bottom: 2px solid #0288d1;
+            padding-bottom: 10px;
+        }
 
-    input[type="text"],
-    input[type="email"] {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
+        form {
+            margin-top: 20px;
+        }
 
-    button[type="submit"] {
-        background-color: #0288d1;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            background-color: #0288d1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
         button[type="submit"]:hover {
             background-color: #0277bd;
         }
 
-</style>
+    </style>
 </head>
 
 <body>
@@ -85,14 +86,14 @@
         <section class="section">
             <h2>Add New User</h2>
             <form action="process_create_user.php" method="POST">
-                <label for="user ID">userID:</label>
-                <input type="text" id="user ID" name="user ID" required>
+                <label for="userID">User ID:</label>
+                <input type="text" id="userID" name="userID" required>
                 <br>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
                 <br>
-                <label for="password">password:</label>
-                <input type="text" id="password" name="password" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
                 <br>
                 <label for="role">Role:</label>
                 <input type="text" id="role" name="role" required>
@@ -109,6 +110,6 @@
                 <button type="submit" class="btn">Create User</button>
             </form>
         </section>
-        </div>
+    </div>
 </body>
 </html>

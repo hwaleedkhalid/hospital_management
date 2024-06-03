@@ -1,4 +1,32 @@
-﻿<!DOCTYPE html>
+﻿<?php
+// Include database configuration file
+require_once('../../../config/database.php');
+
+// Establish a database connection
+$database = new Database();
+$conn = $database->getConnection();
+
+// Check if user ID is provided in the URL query string
+$user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
+
+// Initialize an empty array to store users
+$users = [];
+
+// Fetch users based on the provided user ID or fetch all users if no user ID is provided
+if ($user_id) {
+    // Prepare and execute a statement to select a user by ID
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->bindParam(1, $user_id);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    // Fetch all users
+    $stmt = $conn->query("SELECT * FROM users");
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -41,13 +69,13 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
 
-            .section h2 {
-                margin-top: 0;
-                color: #00796b;
-                border-bottom: 2px solid #0288d1;
-                padding-bottom: 10px;
-                text-align: left;
-            }
+        .section h2 {
+            margin-top: 0;
+            color: #00796b;
+            border-bottom: 2px solid #0288d1;
+            padding-bottom: 10px;
+            text-align: left;
+        }
 
         .search-form {
             display: flex;
@@ -56,25 +84,25 @@
             margin-bottom: 20px;
         }
 
-            .search-form input[type="text"] {
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 4px 0 0 4px;
-                outline: none;
-            }
+        .search-form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
 
-            .search-form button {
-                padding: 10px;
-                border: 1px solid #ccc;
-                background-color: #0288d1;
-                color: white;
-                border-radius: 0 4px 4px 0;
-                cursor: pointer;
-            }
+        .search-form button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #0288d1;
+            color: white;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
 
-                .search-form button:hover {
-                    background-color: #0277bd;
-                }
+        .search-form button:hover {
+            background-color: #0277bd;
+        }
 
         table {
             width: 100%;
@@ -100,9 +128,9 @@
             text-decoration: none;
         }
 
-            a:hover {
-                text-decoration: underline;
-            }
+        a:hover {
+            text-decoration: underline;
+        }
 
         .footer {
             text-align: center;
@@ -113,25 +141,8 @@
             width: 100%;
             bottom: 0;
         }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 10px;
-            }
-
-            .section {
-                margin-bottom: 40px;
-            }
-
-                .section a {
-                    display: inline-block;
-                    margin-top: 10px;
-                }
-        }
     </style>
 </head>
-
 <body>
     <h1>Manage Users</h1>
     <div class="container">
@@ -146,7 +157,6 @@
         </section>
 
         <section class="section">
-            
             <table>
                 <thead>
                     <tr>
@@ -155,44 +165,17 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    // Fetching users from the database
-                    $users = [];
-                    $user_id = isset($_GET['user_id']) ? $_GET['user_id'] : '';
-                    if ($user_id) {
-                    // Search for specific user
-                    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
-                    $stmt->bind_param("s", $user_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    if ($result->num_rows > 0) {
-                    $users = $result->fetch_all(MYSQLI_ASSOC);
-                    }
-                    $stmt->close();
-                    } else {
-                    // Fetch all users
-                    $result = $conn->query("SELECT * FROM users");
-                    if ($result->num_rows > 0) {
-                    $users = $result->fetch_all(MYSQLI_ASSOC);
-                    }
-                    }
-
-                    foreach ($users as $user):
-                    ?>
+                    <?php foreach ($users as $user): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($user['user_id']); ?></td>
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td><?php echo htmlspecialchars($user['name']); ?></td>
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['phone']); ?></td>
-                        <td>
-                            <a href="edit_user.php?id=<?php echo htmlspecialchars($user['user_id']); ?>">Edit</a>
-                            <a href="delete_user.php?id=<?php echo htmlspecialchars($user['user_id']); ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
+                        
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -202,6 +185,8 @@
 
     <div class="footer">
         &copy; 2024 Hospital Management System. All rights reserved.
-    </div>
+   
+        </div>
+
 </body>
 </html>
