@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Appointment</title>
+    <link rel="stylesheet" href="/public/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+
+        .section {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+            background-color: #0288d1;
+            margin: 0;
+        }
+
+        h2 {
+            color: #00796b;
+            border-bottom: 2px solid #0288d1;
+            padding-bottom: 10px;
+        }
+
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="email"],
+        input[type="password"],
+        textarea {
+            width: calc(100% - 22px); /* Adjusted width for better alignment */
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px; /* Increased font size for better readability */
+        }
+
+        input[type="submit"] {
+            background-color: #0288d1;
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px; /* Increased font size for better readability */
+        }
+
+            input[type="submit"]:hover {
+                background-color: #0277bd;
+            }
+
+        textarea {
+            width: calc(100% - 22px); /* Adjusted width for better alignment */
+            resize: vertical;
+        }
+
+        .success-message {
+            text-align: center;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Appointments</h1>
+    <div class="container">
+        <section class=" Section">
+          
+
+            <form action="schedule_appointment.php" method="POST">
+                <h2>Schedule Appointment</h2>
+                <label for="patient_name">Patient Name:</label>
+
+                <input type="text" id="patient_name" name="patient_name" required><br>
+
+                <label for="doctor_name">Doctor Name:</label>
+                <input type="text" id="doctor_name" name="doctor_name" required><br>
+
+                <label for="appointment_date">Appointment Date:</label>
+                <input type="date" id="appointment_date" name="appointment_date" required><br>
+
+                <label for="appointment_time">Appointment Time:</label>
+                <input type="time" id="appointment_time" name="appointment_time" required><br>
+
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" required><br>
+
+                <label for="notes">Notes:</label>
+                <textarea id="notes" name="notes" rows="4" cols="50"></textarea><br>
+
+                <input type="submit" value="Schedule Appointment">
+            </form>
+        </section>
+    </div>
+    <div class="footer">
+        &copy; 2024 Hospital Management System. All rights reserved.
+    </div>
+</body>
+</html>

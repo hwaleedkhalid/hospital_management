@@ -1,179 +1,65 @@
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/public/css/dashboard.css">
+    <link rel="stylesheet" href = "\hospital_management\public\css\admin-dashboard.css" >
 </head>
 <body>
-    <?php
-    // Include necessary models and authentication
-    require_once __DIR__ . '/../../helpers/Auth.php';
-    require_once __DIR__ . '/../../../config/database.php';
-
-    Auth::check();
-    require_once __DIR__ . '/../../models/User.php';
-    require_once __DIR__ . '/../../models/Appointment.php';
-    require_once __DIR__ . '/../../models/Department.php';
-
-    // Database connection
-    $database = new Database();
-    $db = $database->getConnection();
-
-    // Fetch data
-    $user = new User($db);
-    $users = $user->read();
-
-    $appointment = new Appointment($db);
-    $appointments = $appointment->getAllAppointments();
-
-    $department = new Department($db);
-    $departments = $department->getAllDepartments();
-?>
-
-
-
+    <h1>Admin Dashboard</h1>
     <div class="container">
-        <h1>Admin Dashboard</h1>
-        
-        <section class="section">
+        <div class="section">
             <h2>Manage Users</h2>
             <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
-                    <tr>
-                        <td><?php echo $user['username']; ?></td>
-                        <td><?php echo $user['role']; ?></td>
-                        <td><?php echo $user['name']; ?></td>
-                        <td><?php echo $user['email']; ?></td>
-                        <td><?php echo $user['phone']; ?></td>
-                        <td>
-                            <a href="edit_user.php?id=<?php echo $user['user_id']; ?>">Edit</a>
-                            <a href="delete_user.php?id=<?php echo $user['user_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <tr>
+                    <td><a href="\hospital_management\src\views\admin\view_users.html" class="btn">View Users</a></td>
+                    <td><a href="\hospital_management\src\views\admin\create_user.html" class="btn">Create User</a></td>
+                    <td><a href="\hospital_management\src\views\admin\view_user_by_id.html" class="btn">View User by ID</a></td>
+                </tr>
             </table>
-            <a href="create_user.php">Add New User</a>
-        </section>
-        
-        <section class="section">
-            <h2>View Appointments</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Patient Name</th>
-                        <th>Doctor Name</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($appointments as $appointment): ?>
-                    <tr>
-                        <td><?php echo $appointment['patient_name']; ?></td>
-                        <td><?php echo $appointment['doctor_name']; ?></td>
-                        <td><?php echo $appointment['appointment_date']; ?></td>
-                        <td><?php echo $appointment['appointment_time']; ?></td>
-                        <td><?php echo $appointment['status']; ?></td>
-                        <td>
-                            <a href="view_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">View</a>
-                            <a href="edit_appointment.php?id=<?php echo $appointment['appointment_id']; ?>">Edit</a>
-                            <a href="delete_appointment.php?id=<?php echo $appointment['appointment_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </section>
-        
-        <section class="section">
-            <h2>Departments</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Department Name</th>
-                        <th>Description</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($departments as $department): ?>
-                    <tr>
-                        <td><?php echo $department['name']; ?></td>
-                        <td><?php echo $department['description']; ?></td>
-                        <td>
-                            <a href="edit_department.php?id=<?php echo $department['department_id']; ?>">Edit</a>
-                            <a href="delete_department.php?id=<?php echo $department['department_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <a href="create_department.php">Add New Department</a>
-        </section>
-    </div>
+        </div>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-        }
-        h1, h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-       
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        a {
-            color: #333;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .section {
-            margin-bottom: 40px;
-        }
-        .section a {
-            display: inline-block;
-            margin-top: 10px;
-        }
-    </style>
+        <div class="section">
+            <h2>Manage Doctors</h2>
+            <table>
+                <tr>
+                    <td><a href="\hospital_management\src\views\admin\view_Doctors.html" class="btn">View Doctors</a></td>
+                    <td><a href="\hospital_management\src\views\admin\Add_Doctors.html" class="btn">Add Doctor</a></td>
+                    <td><a href="\hospital_management\src\views\admin\view_Doctors_by_id.html" class="btn">View Doctor by ID</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Manage Patients</h2>
+            <table>
+                <tr>
+                    <td><a href="\hospital_management\src\views\admin\view_Patients.html" class="btn">View Patients</a></td>
+                    <td><a href="\hospital_management\src\views\admin\Add_Patient.html" class="btn">Add Patient</a></td>
+                    <td><a href="\hospital_management\src\views\admin\view_Patient_by_id.html" class="btn">View Patient by ID</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Manage Appointments</h2>
+            <a href="\hospital_management\src\views\admin\view_appointments.html" class="btn">View Appointments</a>
+            <a href="\hospital_management\src\views\admin\schedule_appointment.html" class="btn">Schedule Appointments</a>
+            <a href="\hospital_management\src\views\admin\view_appointments_by_doctor.html" class="btn">View Appointments by Doctor</a>
+            <a href="\hospital_management\src\views\admin\view_appointments_by_ID.html" class="btn">View Appointments by Appointment ID</a>
+        </div>
+        <div class="section">
+            <h2>Manage Departments</h2>
+            <a href="\hospital_management\src\views\admin\view_departments.html" class="btn">View Departments</a>
+            <a href="\hospital_management\src\views\admin\create_department.html" class="btn">Create Department</a>
+            <a href="\hospital_management\src\views\admin\Veiw_department_by_ID.html" class="btn">Search by ID</a>
+
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2024 Hospital Management System. All rights reserved.
+    </div>
 </body>
 </html>
