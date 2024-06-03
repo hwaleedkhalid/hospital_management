@@ -1,6 +1,6 @@
 <?php
 // Include database and user model
-require_once '../../../config/database.php';
+require_once '../../../config/database.php'; // Corrected path
 require_once '../../models/User.php';
 
 // Initialize database connection
@@ -48,7 +48,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['phone']); ?></td>
                         <td>
-                            <a href="edit_user.php?id=<?php echo $user['user_id']; ?>">Edit</a>
+                            <a href="../../helpers/edit_user.php?id=<?php echo $user['user_id']; ?>">Edit</a>
                             <a href="../../helpers/delete_user.php?id=<?php echo $user['user_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>

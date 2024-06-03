@@ -1,8 +1,14 @@
 <?php
+// Check if the constant is not defined before defining it
+if (!defined('ROOT_PATH')) {
+    // Define the root directory
+    define('ROOT_PATH', dirname(dirname(__DIR__)));
+}
+
 // Include the necessary files
-require_once '../../../config/database.php';
-require_once '../../models/User.php';
-require_once '../../helpers/Auth.php';
+require_once ROOT_PATH . '/config/database.php';
+require_once ROOT_PATH . '/src/models/User.php';
+require_once ROOT_PATH . '/src/helpers/Auth.php';
 
 // Check if the user is authenticated and is an admin
 Auth::startSession();
