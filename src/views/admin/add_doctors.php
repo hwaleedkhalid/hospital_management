@@ -10,29 +10,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
     $address = $_POST['address'];
+    $user_id = $_POST['user_id'];
 
     // Create a new instance of the Database class
     $database = new Database();
     $conn = $database->getConnection();
 
-    // SQL query to insert new doctor data into the database
-    $query = "INSERT INTO doctors (name, specialty, phone, email, address) VALUES (:name, :specialty, :phone, :email, :address)";
-    $stmt = $conn->prepare($query);
+    // Check if the user_id exists in the users table
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$user_id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Bind parameters
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':specialty', $specialty);
-    $stmt->bindParam(':phone', $phone);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':address', $address);
+    if ($user) {
+        // Insert the doctor record
+        $query = "INSERT INTO doctors (name, specialty, phone, email, address, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([$name, $specialty, $phone, $email, $address, $user_id]);
 
-    // Execute the query
-    if ($stmt->execute()) {
-        // Redirect to a success page or display a success message
-        echo "Doctor added successfully.";
+        // Redirect to success page or display success message
+        header("Location: /hospital_management/src/views/admin/dashboard.html");
+        exit();
     } else {
-        // Handle the error, redirect to an error page or display an error message
-        echo "Unable to add doctor.";
+        // Display an error message if the user_id doesn't exist
+        $error_message = "User ID does not exist.";
     }
 }
 ?>
@@ -59,8 +59,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="email" id="email" name="email" required>
             <label for="address">Address:</label>
             <textarea id="address" name="address" required></textarea>
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required>
             <button type="submit">Add Doctor</button>
         </form>
+        <?php if (isset($error_message)) : ?>
+            <p><?php echo $error_message; ?></p>
+        <?php endif; ?>
     </div>
 </body>
 </html>
