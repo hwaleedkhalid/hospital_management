@@ -48,8 +48,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                         <td><?php echo htmlspecialchars($user['phone']); ?></td>
                         <td>
-                            <a href="../../helpers/edit_user.php?id=<?php echo $user['user_id']; ?>">Edit</a>
-                            <a href="../../helpers/delete_user.php?id=<?php echo $user['user_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="../../helpers/edit_doctor.php?id=<?php echo $doctor['doctor_id']; ?>">Edit</a>
+                            <a href="../../helpers/delete_doctor.php?id=<?php echo $doctor['doctor_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

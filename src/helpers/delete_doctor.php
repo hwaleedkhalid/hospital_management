@@ -1,37 +1,32 @@
 <?php
-// Define the root directory
-define('ROOT_PATH', dirname(dirname(__DIR__)));
+// Include database connection file
+require_once '../../config/database.php';
 
-// Include the necessary files
-include_once ROOT_PATH . '/config/database.php';
-include_once ROOT_PATH . '/src/models/Doctor.php';
-include_once ROOT_PATH . '/src/helpers/Auth.php';
+// Check if doctor ID is provided via GET request
+if(isset($_GET['id'])) {
+    $doctor_id = $_GET['id'];
 
-// Check if the user is authenticated and is an admin
-Auth::startSession();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /hospital_management/public/index.php?url=login');
-    exit();
-}
-
-// Check if the required POST data is set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
-    $id = htmlspecialchars(strip_tags($_POST['id']));
-
-    // Create database connection
+    // Create a new instance of the Database class
     $database = new Database();
-    $db = $database->getConnection();
+    $conn = $database->getConnection();
 
-    // Create an instance of the Doctor class
-    $doctor = new Doctor($db);
+    // SQL query to delete doctor data by ID
+    $query = "DELETE FROM doctors WHERE doctor_id = :doctor_id";
+    $stmt = $conn->prepare($query);
 
-    // Delete the doctor
-    if ($doctor->deleteDoctor($id)) {
-        echo json_encode(["message" => "Doctor was deleted."]);
+    // Bind parameter values
+    $stmt->bindParam(':doctor_id', $doctor_id);
+
+    // Execute the query
+    if ($stmt->execute()) {
+        // Redirect to a success page or display a success message
+        echo json_encode(array("message" => "Doctor deleted successfully."));
     } else {
-        echo json_encode(["message" => "Unable to delete doctor."]);
+        // Handle the error, redirect to an error page or display an error message
+        echo json_encode(array("message" => "Unable to delete doctor."));
     }
 } else {
-    echo json_encode(["message" => "Invalid request."]);
+    // Handle the case where doctor ID is not provided
+    echo json_encode(array("message" => "Doctor ID not provided."));
 }
 ?>
