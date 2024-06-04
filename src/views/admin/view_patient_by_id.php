@@ -2,30 +2,27 @@
 // Include database connection file
 require_once '../../../config/database.php';
 
-// Initialize the $patient variable
+// Initialize variables
 $patient = null;
+$user_entered_id = '';
 
-// Check if the patient ID is provided in the URL
+// Create a new instance of the Database class
+$database = new Database();
+$conn = $database->getConnection();
+
+// Check if patient ID is provided in the URL query parameter
 if (isset($_GET['patient_id'])) {
-    // Retrieve the patient ID from the URL
-    $patient_id = $_GET['patient_id'];
+    $user_entered_id = $_GET['patient_id'];
 
-    // Create a new instance of the Database class
-    $database = new Database();
-    $conn = $database->getConnection();
-
-    // SQL query to fetch the patient data by ID
+    // SQL query to fetch patient by ID
     $query = "SELECT * FROM patients WHERE patient_id = :patient_id";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':patient_id', $patient_id);
+    $stmt->bindParam(':patient_id', $user_entered_id);
     $stmt->execute();
 
     // Fetch the patient data
     $patient = $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
-// Initialize a variable to hold the patient ID entered by the user
-$user_entered_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -34,12 +31,11 @@ $user_entered_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Patient</title>
-    <!-- Link to external CSS file -->
-    <link rel="stylesheet" href="/hospital_management/public/css/patient-by-id.css">
+    <link rel="stylesheet" href="/hospital_management/public/css/view_patients_by_id.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>View Patient</h1>
+    <h1 class="manage-patient">Manage Patient</h1>
     <div class="container">
         <section class="section">
             <h2>Search Patient by ID</h2>
@@ -55,15 +51,44 @@ $user_entered_id = isset($_GET['patient_id']) ? $_GET['patient_id'] : '';
             <h2>Patient Information</h2>
             <div class="patient-info">
                 <?php if ($patient): ?>
-                    <p><strong>Patient ID:</strong> <?php echo $patient['patient_id']; ?></p>
-                    <p><strong>User ID:</strong> <?php echo $patient['user_id']; ?></p>
-                    <p><strong>Name:</strong> <?php echo $patient['name']; ?></p>
-                    <p><strong>Date of Birth:</strong> <?php echo $patient['dob']; ?></p>
-                    <p><strong>Gender:</strong> <?php echo $patient['gender']; ?></p>
-                    <p><strong>Address:</strong> <?php echo $patient['address']; ?></p>
-                    <p><strong>Phone:</strong> <?php echo $patient['phone']; ?></p>
-                    <p><strong>Email:</strong> <?php echo $patient['email']; ?></p>
-                    <p><strong>Emergency Contact:</strong> <?php echo $patient['emergency_contact']; ?></p>
+                    <table>
+                        <tr>
+                            <th>Patient ID</th>
+                            <td><?php echo htmlspecialchars($patient['patient_id']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>User ID</th>
+                            <td><?php echo htmlspecialchars($patient['user_id']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Name</th>
+                            <td><?php echo htmlspecialchars($patient['name']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Date of Birth</th>
+                            <td><?php echo htmlspecialchars($patient['dob']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td><?php echo htmlspecialchars($patient['gender']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td><?php echo htmlspecialchars($patient['address']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td><?php echo htmlspecialchars($patient['phone']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td><?php echo htmlspecialchars($patient['email']); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Emergency Contact</th>
+                            <td><?php echo htmlspecialchars($patient['emergency_contact']); ?></td>
+                        </tr>
+                    </table>
                 <?php elseif ($user_entered_id !== ''): ?>
                     <p>No patient found with the provided ID.</p>
                 <?php endif; ?>

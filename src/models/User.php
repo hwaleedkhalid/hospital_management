@@ -49,6 +49,7 @@ class User {
         return $stmt;
     }
 
+    
     public function readOne() {
         $query = "SELECT * FROM " . $this->table_name . " WHERE user_id = ? LIMIT 0,1";
         $stmt = $this->conn->prepare($query);

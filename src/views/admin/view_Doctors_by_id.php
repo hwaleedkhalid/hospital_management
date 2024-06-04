@@ -57,7 +57,7 @@ if (isset($_GET['doctor_id'])) {
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Actions</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -71,10 +71,7 @@ if (isset($_GET['doctor_id'])) {
                         echo "<td>" . htmlspecialchars($doctor['phone']) . "</td>";
                         echo "<td>" . htmlspecialchars($doctor['email']) . "</td>";
                         echo "<td>" . htmlspecialchars($doctor['address']) . "</td>";
-                        echo "<td>";
-                        echo "<a href='edit_user.php?id=" . htmlspecialchars($doctor['doctor_id']) . "'>Edit</a>";
-                        echo "<a href='delete_user.php?id=" . htmlspecialchars($doctor['doctor_id']) . "' onclick=\"return confirm('Are you sure?')\">Delete</a>";
-                        echo "</td>";
+                       
                         echo "</tr>";
                     } else {
                         // Display a message if the doctor details are not found

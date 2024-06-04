@@ -2,6 +2,8 @@
 // Include database connection file
 require_once '../../../config/database.php';
 
+$error_message = '';
+
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
@@ -49,23 +51,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>Add Doctor</h1>
     <div class="container">
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <label for="specialty">Specialty:</label>
-            <input type="text" id="specialty" name="specialty" required>
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" name="phone" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="address">Address:</label>
-            <textarea id="address" name="address" required></textarea>
-            <label for="user_id">User ID:</label>
-            <input type="text" id="user_id" name="user_id" required>
-            <button type="submit">Add Doctor</button>
+            <div class="section">
+                <h2>Doctor Information</h2>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="specialty">Specialty:</label>
+                <input type="text" id="specialty" name="specialty" required>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" required></textarea>
+                <label for="user_id">User ID:</label>
+                <input type="text" id="user_id" name="user_id" required>
+                <button type="submit">Add Doctor</button>
+                <?php if (!empty($error_message)) : ?>
+                    <p class="error-message"><?php echo $error_message; ?></p>
+                <?php endif; ?>
+            </div>
         </form>
-        <?php if (isset($error_message)) : ?>
-            <p><?php echo $error_message; ?></p>
-        <?php endif; ?>
+    </div>
+    <div class="footer">
+        &copy; 2024 Hospital Management System. All rights reserved.
     </div>
 </body>
 </html>

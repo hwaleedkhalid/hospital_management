@@ -1,0 +1,151 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Patient History</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: #fff;
+            background-color: #0288d1;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .section {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .section h2 {
+                margin-top: 0;
+                color: #00796b;
+                border-bottom: 2px solid #0288d1;
+                padding-bottom: 10px;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0288d1;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 10px;
+            }
+
+            .section {
+                padding: 10px;
+            }
+
+                .section h2 {
+                    font-size: 1.2em;
+                }
+        }
+    </style>
+</head>
+<body>
+    <h1>View Patient History</h1>
+    <div class="container">
+        <div class="section">
+            <h2>Search Patient History by Name</h2>
+            <form method="POST" action="view_patient_history.php">
+                <input type="text" name="patient_name" placeholder="Enter patient name" required>
+                <button type="submit" class="btn">Search</button>
+            </form>
+        </div>
+        <div class="section">
+            <h2>Patient History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Doctor Name</th>
+                        <th>Diagnosis</th>
+                        <th>Treatment</th>
+                        <th>Prescriptions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (count($patient_history)
+                    <?php foreach ($patient_history as $history): ?>
+                    <tr>
+                        <td><?php echo $history['date']; ?></td>
+                        <td><?php echo $history['doctor_name']; ?></td>
+                        <td><?php echo $history['diagnosis']; ?></td>
+                        <td><?php echo $history['treatment']; ?></td>
+                        <td><?php echo $history['prescriptions']; ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php else: ?>
+                    <tr>
+                        <td colspan="5">No patient history found.</td>
+                    </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2024 Hospital Management System. All rights reserved.
+    </div>
+</body>
+</html>

@@ -1,60 +1,98 @@
 <?php
-// Check if the constant is not defined before defining it
-if (!defined('ROOT_PATH')) {
-    // Define the root directory
-    define('ROOT_PATH', dirname(dirname(__DIR__)));
+// Include database and user model (adjust paths if needed)
+require_once '../../config/database.php';
+require_once '../models/User.php';
+
+// Initialize database connection
+$database = new Database();
+$db = $database->getConnection();
+
+// Initialize User object
+$user = new User($db);
+
+// Check if a user ID is provided in the URL
+$user_id = isset($_GET['id']) ? $_GET['id'] : null;
+
+// Handle form submission (if submitted)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Get user data from the form
+  $user_data = [
+    'id' => $_POST['id'], // Assuming a hidden field for user ID
+    'username' => $_POST['username'],
+    'role' => $_POST['role'], // Adjust field names based on your user model
+    'name' => $_POST['name'],
+    'email' => $_POST['email'],
+    // Add other user fields here (phone, etc.)
+  ];
+
+  // Update user information
+  if ($user->update($user_data)) {
+    // User updated successfully, redirect back to view users page
+    header('Location: view_users.php');
+    exit;
+  } else {
+    // Update failed, display error message
+    $error_message = "Error updating user: " . $user->getError();
+  }
 }
 
-// Include the necessary files
-require_once ROOT_PATH . '/config/database.php';
-require_once ROOT_PATH . '/src/models/User.php';
-require_once ROOT_PATH . '/src/helpers/Auth.php';
-
-// Check if the user is authenticated and is an admin
-Auth::startSession();
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header('Location: /hospital_management/public/index.php?url=login');
-    exit();
-}
-
-// Check if the required POST data is set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
-    $user_id = htmlspecialchars(strip_tags($_POST['user_id']));
-    $username = htmlspecialchars(strip_tags($_POST['username']));
-    $role = htmlspecialchars(strip_tags($_POST['role']));
-    $name = htmlspecialchars(strip_tags($_POST['name']));
-    $email = htmlspecialchars(strip_tags($_POST['email']));
-    $phone = htmlspecialchars(strip_tags($_POST['phone']));
-
-    // Create database connection
-    $database = new Database();
-    $db = $database->getConnection();
-
-    // Create an instance of the User class
-    $user = new User($db);
-    $user->user_id = $user_id;
-    $user->username = $username;
-    $user->role = $role;
-    $user->name = $name;
-    $user->email = $email;
-    $user->phone = $phone;
-
-    // Check if password is provided and update it if necessary
-    if (!empty($_POST['password'])) {
-        $user->password = password_hash(htmlspecialchars(strip_tags($_POST['password'])), PASSWORD_BCRYPT);
-    } else {
-        // Retrieve the current password from the database
-        $user->readOne();
-        $user->password = $user->password;
-    }
-
-    // Update the user
-    if ($user->update()) {
-        echo json_encode(["message" => "User was updated."]);
-    } else {
-        echo json_encode(["message" => "Unable to update user."]);
-    }
+// If user ID is provided, fetch user information for editing
+if ($user_id) {
+  $user_data = $user->readById($user_id);
+  if (!$user_data) {
+    // User not found, display error message
+    $error_message = "User not found";
+  }
 } else {
-    echo json_encode(["message" => "Invalid request."]);
+  // No user ID provided, redirect back to view users page
+  header('Location: view_users.php');
+  exit;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit User</title>
+  <link rel="stylesheet" href="/hospital_management/public/css/edit_user.css"> </head>
+<body>
+  <h1>Edit User</h1>
+  <?php if (isset($error_message)): ?>
+    <div class="error-message"><?php echo $error_message; ?></div>
+  <?php endif; ?>
+
+  <form action="" method="post">
+    <input type="hidden" name="id" value="<?php echo $user_data['id']; ?>">  <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" value="<?php echo isset($user_data['username']) ? htmlspecialchars($user_data['username']) : ''; ?>">
+    </div>
+
+    <div class="form-group">
+      <label for="role">Role:</label>
+      <select name="role" id="role">
+        <option value="admin">Admin</option>
+        <option value="doctor">Doctor</option>
+        <option value="patient">Patient</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name" value="<?php echo isset($user_data['name']) ? htmlspecialchars($user_data['name']) : ''; ?>">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" value="<?php echo isset($user_data['email']) ? htmlspecialchars($user_data['email']) : ''; ?>">
+    </div>
+
+    <div class="button-container">
+      <button type="submit">Save</button>
+      <a href="view_users.php">Cancel</a>
+    </div>
+  </form>
+
+</body>
+</html>

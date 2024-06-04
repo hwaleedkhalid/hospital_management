@@ -1,24 +1,30 @@
 ﻿<?php
-include '../../../config/database.php';
+// Include database connection file
+require_once '../../../config/database.php';
 
-// Fetch departments from the database
-$sql = "SELECT * FROM departments";
-$result = $conn->query($sql);
-$departments = $result->fetch_all(MYSQLI_ASSOC);
+// Create a new instance of the Database class
+$database = new Database();
+$conn = $database->getConnection();
+
+// Retrieve departments from the database
+$query = "SELECT * FROM departments";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$departments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Departments</title>
-    <link rel="stylesheet" href="/public/css/view_department.css">
+    <link rel="stylesheet" href="/hospital_management/public/css/view_departments.css">
 </head>
 <body>
-
-    <h1>Manage Departments</h1>
+    <h1 class="manage-department">Manage Departments</h1>
     <div class="container">
-        <section class="section">
+        <div class="section">
             <h2>Departments List</h2>
             <table>
                 <thead>
@@ -32,23 +38,18 @@ $departments = $result->fetch_all(MYSQLI_ASSOC);
                 <tbody>
                     <?php foreach ($departments as $department): ?>
                     <tr>
-                        <td><?php echo $department['department_id']; ?></td>
-                        <td><?php echo $department['name']; ?></td>
-                        <td><?php echo $department['description']; ?></td>
+                        <td><?php echo htmlspecialchars($department['department_id']); ?></td>
+                        <td><?php echo htmlspecialchars($department['name']); ?></td>
+                        <td><?php echo htmlspecialchars($department['description']); ?></td>
                         <td>
-                            <a href="edit_department.php?id=<?php echo $department['department_id']; ?>">Edit</a>
-                            <a href="delete_department.php?id=<?php echo $department['department_id']; ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                            <a href="edit_department.php?id=<?php echo htmlspecialchars($department['department_id']); ?>">Edit</a>
+                            <a href="delete_department.php?id=<?php echo htmlspecialchars($department['department_id']); ?>" onclick="return confirm('Are you sure?')">Delete</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </section>
+        </div>
     </div>
-
-    <div class="footer">
-        &copy; 2024 Hospital Management System. All rights reserved.
-    </div>
-
 </body>
 </html>
